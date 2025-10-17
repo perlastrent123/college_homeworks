@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                background-color: pink;
+            }
+
+            input { 
+                width: 295px;
+                height: 10px;
+                padding: 10px;
+
+                border: none;
+                outline: none;
+            }
+
+            input, p {
+                color: #000;
+                font-family: "IBM Plex Sans", sans-serif;
+                font-weight: bold;
+            }
+
+            img, input {
+                border-radius: 4px;
+            }
+
+            .center {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                height: 97vh;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="result-container" class="center">
+            <p id="text_display"></p>
+            <div id="image-container">
+                <img id="idle_img" src='bocchi_idle.gif' alt='cute girl awkwardly staring' width='314' height='auto'>
+                <img id="think_img" src='bocchi_think.gif' alt='cute girl struggling to think' width='500' height='auto' style="display: none;">
+                <img id="answer_img" src='bocchi_answer.gif' alt='cute girl happily answering' width='409' height='auto'  style="display: none;">
+            </div>        
+            <div id="input-container">
+                <input id="input_field" type='text' autocomplete="new-password" autofocus onkeydown="pressed(this)">
+            </div>   
+        </div>
+    </body>
+    <script>
+        const image_urls = [
+                'bocchi_think.gif',
+                'bocchi_answer.gif',
+                'bocchi_idle.gif'
+                ];
+
+        function preload_image(url) {
+            const img = new Image();
+            img.src = url;
+        }
+            
+        image_urls.forEach(url => preload_image(url));
+
+        const idle_img = document.getElementById("idle_img");
+        const think_img = document.getElementById("think_img");
+        const answer_img = document.getElementById("answer_img");
+        const input_field = document.getElementById("input_field");
+        const text_display = document.getElementById("text_display");
+
+        let result_block = document.getElementById("result-container");
+        let again = false;
+        let result_output;
+
+        function pressed(result) {
+            if (event.key === "Enter" && !again) {
+                const result_value = result.value;
+
+                if (result_value % 2 == 0) {    
+                    console.log("Even :3");
+
+                    result_output = "You have entered an EVEN!";
+                }
+                else if (result_value % 2 == 1) {
+                    console.log("Odd :(");
+
+                    result_output = "You have entered a ODD!";
+                }
+                else {
+                    console.log("PLEASE ENTER A VALID NUMBER >:(");
+
+                    result_output = "You haven entered an INVALID NUMBER >:( BOOOOOOOOOOOOO";
+                }
+
+                ai_process(result_output);
+            }
+        };
+        
+        function ai_process(result) {
+            idle_img.style.display = 'none';
+            input_field.style.display = 'none'; 
+
+            think_img.style.display = 'inline';
+            text_display.innerHTML = "Thinking...";
+             
+            setTimeout(function() {
+                think_img.style.display = 'none';
+                text_display.innerHTML = `${result}`
+                answer_img.style.display = 'inline';
+                again = true;
+           }, 2000); 
+        };
+
+        document.addEventListener('keydown', function(event) {
+            if (again) {
+                again = false;
+                answer_img.style.display = "none";
+                idle_img.style.display = "inline";
+                input_field.style.display = "inline";
+                input_field.value = "";
+                input_field.select();
+                text_display.innerHTML = "";
+            };
+        });
+
+    </script>
+</html>
