@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+           body {
+                background-color: pink;
+            }
+
+            input { 
+                width: 295px;
+                height: 10px;
+                padding: 10px;
+
+                border: none;
+                outline: none;
+            }
+
+            input, p {
+                color: #000;
+                font-family: "IBM Plex Sans", sans-serif;
+                font-weight: bold;
+            }
+
+            img, input {
+                border-radius: 4px;
+            }
+
+            .center {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                height: 97vh;
+            }
+
+            /* Stolen from https://www.w3schools.com/howto/howto_css_glowing_text.asp */
+            .glow {
+                font-family: 'Comic Sans MS', cursive;
+                font-size: 40px;
+                color: #fff;
+                text-align: center;
+                -webkit-animation: glow 1s ease-in-out infinite alternate;
+                -moz-animation: glow 1s ease-in-out infinite alternate;
+                animation: glow 1s ease-in-out infinite alternate;
+            }
+
+            @-webkit-keyframes glow {
+                from {
+                    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+                }
+                to {
+                    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+                }
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div id="result-container" class="center">
+            <p id="text_display" class="glow">Bocchi Ticket World!</p>
+            <div id="image-container">
+                <img id="idle_img" src='https://media1.tenor.com/m/AQovilGC1TQAAAAd/bocchi-party.gif' alt='cute girl partying' width='314' height='auto'>
+            <div id="input-container">
+                <input id="input_field" type='number' autofocus autocomplete="new-password" spellcheck="false" aria-autocomplete="none">
+            </div>   
+        </div>
+    </body>
+    <script>
+        function getAge(age) {
+
+            if (isNaN(age) || age == "") {
+                return "Please enter numbers only."
+            }
+
+            if (age < 8) {
+                return "Free";
+            } else if (age < 12) { // Logically equivalent with age <= 7 && age < 12
+                return "₱5";
+            } else if (age < 18) {
+                return "₱60";
+            } else if (age < 23) {
+                return "₱70";
+            } else if (age < 36) {
+                return "₱100";
+            } else if (age < 60) {
+                return "₱150";
+            } else {
+                return "₱20";
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                alert(getAge(document.getElementById('input_field').value));
+            }
+        });
+
+    </script>
+</html>
